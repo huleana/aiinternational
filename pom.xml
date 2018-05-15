@@ -16,6 +16,11 @@
 	    <version>1.11.328</version>
 	  </dependency>
 	  <dependency>
+	    <groupId>com.amazonaws</groupId>
+	    <artifactId>aws-java-sdk-translate</artifactId>
+	    <version>1.11.328</version>
+	  </dependency>
+	  <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
             <version>1.3.5</version>
