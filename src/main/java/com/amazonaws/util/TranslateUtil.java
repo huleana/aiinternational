@@ -22,8 +22,7 @@ public class TranslateUtil {
         	translation = result.getTranslatedText();
         } catch(UnsupportedLanguagePairException exception) {
         	System.out.println(exception.getErrorMessage());
-        }
-        System.out.println(translation);   
+        } 
         return translation;
 	}
 }

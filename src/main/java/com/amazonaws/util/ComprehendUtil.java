@@ -3,8 +3,11 @@ package com.amazonaws.util;
 import java.util.Iterator;
 import java.util.List;
 
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.comprehend.AmazonComprehend;
 import com.amazonaws.services.comprehend.AmazonComprehendClientBuilder;
+import com.amazonaws.services.comprehend.model.BatchDetectSentimentRequest;
+import com.amazonaws.services.comprehend.model.BatchDetectSentimentResult;
 import com.amazonaws.services.comprehend.model.DetectDominantLanguageRequest;
 import com.amazonaws.services.comprehend.model.DetectDominantLanguageResult;
 import com.amazonaws.services.comprehend.model.DetectSentimentRequest;
@@ -14,7 +17,7 @@ import com.amazonaws.services.comprehend.model.DominantLanguage;
 public class ComprehendUtil {
 	
 	private static AmazonComprehend comprehendClient =
-            AmazonComprehendClientBuilder.standard()
+            AmazonComprehendClientBuilder.standard().withRegion(Regions.US_EAST_1)
                                          .build();
 	
 	public static DetectSentimentResult detectDominantSentiment(String text) {
@@ -29,16 +32,26 @@ public class ComprehendUtil {
 		
 		if(!englishText.isEmpty()) {
 			// Call detectSentiment API
-	        System.out.println("Calling DetectSentiment");
 	        DetectSentimentRequest detectSentimentRequest = new DetectSentimentRequest().withText(englishText)
 	                                                                                    .withLanguageCode("en");
 	        detectSentimentResult = comprehendClient.detectSentiment(detectSentimentRequest);
-	        System.out.println(detectSentimentResult);
-	        System.out.println("End of DetectSentiment\n");
+	        System.out.println("Text: " + englishText);
+	        System.out.println("Language: " + language + ", Result: " + detectSentimentResult.getSentiment());
 		} else {
 			System.out.println("This language is not supported.");
 		}
         
+        return detectSentimentResult;
+	}
+	
+	public static BatchDetectSentimentResult detectBatchDominantSentiment(List<String> text) {
+		BatchDetectSentimentResult detectSentimentResult = null;
+		// Call detectSentiment API
+        BatchDetectSentimentRequest detectSentimentRequest = new BatchDetectSentimentRequest().withTextList(text)
+                                                                                    .withLanguageCode("en");
+        
+        detectSentimentResult = comprehendClient.batchDetectSentiment(detectSentimentRequest);
+        System.out.println("Result: " + detectSentimentResult);
         return detectSentimentResult;
 	}
 	
@@ -48,12 +61,8 @@ public class ComprehendUtil {
 		String dominantLanguage = null;
 		
 		// Call detectDominantLanguage API
-        System.out.println("Calling DetectDominantLanguage");
         DetectDominantLanguageRequest detectDominantLanguageRequest = new DetectDominantLanguageRequest().withText(text);
         DetectDominantLanguageResult detectDominantLanguageResult = comprehendClient.detectDominantLanguage(detectDominantLanguageRequest);
-        System.out.println(detectDominantLanguageResult);
-        System.out.println("End of DetectDominantLanguage\n");
-        
        List<DominantLanguage> languages =  detectDominantLanguageResult.getLanguages();
        double score = 0;
        if(languages != null) {

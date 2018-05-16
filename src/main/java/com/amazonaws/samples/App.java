@@ -1,29 +1,53 @@
 package com.amazonaws.samples;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.comprehend.AmazonComprehend;
-import com.amazonaws.services.comprehend.AmazonComprehendClientBuilder;
-import com.amazonaws.services.comprehend.model.DetectDominantLanguageRequest;
-import com.amazonaws.services.comprehend.model.DetectDominantLanguageResult;
-import com.amazonaws.services.comprehend.model.DetectSentimentRequest;
-import com.amazonaws.services.comprehend.model.DetectSentimentResult;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.amazonaws.dto.Product;
+import com.amazonaws.logic.SentimentLogic;
 import com.amazonaws.util.ComprehendUtil;
 
 public class App 
 {
     public static void main( String[] args )
     {
-
-        String text = "It is raining today in Seattle so rester à la maison.";
-        String text2 = " Je reste à la maison aujourd’hui.";
-        String text3 = "私は毎日日本語の勉強している。難しいです。";
-
-        ComprehendUtil.detectDominantSentiment(text);
-        ComprehendUtil.detectDominantSentiment(text2);
-        ComprehendUtil.detectDominantSentiment(text3);
+    	final String filename = "viber";
+    	List<String> reviews = readFromFile(filename);
+    	Product product = new Product(filename);
+    	List<String> resultList = new ArrayList<String>();
+    	
+    	if(reviews.size() > 1) {
+    		
+    	}
+        for(int i=0; i<reviews.size(); i++) {
+        	String result = SentimentLogic.translateNonEnglishInput(reviews.get(i));
+        	resultList.add(result);
+        }
+        product.setReviewsList(ComprehendUtil.detectBatchDominantSentiment(resultList));
+        SentimentLogic.analyzeSentimentResult(product);
         
         System.out.println( "Done" );
+    }
+    
+    private static List<String> readFromFile(String filename) {
+    	List<String> reviews = new ArrayList<String>();
+    	String line = "";
+    	try {
+    		FileReader fileReader = new FileReader(filename+".txt");
+    		BufferedReader bufferedReader = new BufferedReader(fileReader);
+    		while((line = bufferedReader.readLine()) != null) {
+    			reviews.add(line);
+    		}
+    		bufferedReader.close();
+    	} catch(FileNotFoundException fnfException) {
+    		System.out.println("Unable to open file: " + filename);
+    	} catch(IOException ioException) {
+    		System.out.println("Error reading file: " + filename + "\nError message: " + ioException.getMessage());
+    	}
+    	return reviews;
     }
 }

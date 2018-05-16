@@ -20,6 +20,11 @@
 	    <artifactId>aws-java-sdk-translate</artifactId>
 	    <version>1.11.328</version>
 	  </dependency>
+		<dependency>
+		    <groupId>com.googlecode</groupId>
+		    <artifactId>google-api-translate-java</artifactId>
+		    <version>0.92</version>
+		</dependency>
 	  <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
