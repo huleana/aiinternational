@@ -3,9 +3,14 @@ package com.amazonaws.logic;
 import java.util.List;
 
 import com.amazonaws.dto.Product;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.comprehend.model.BatchDetectSentimentItemResult;
 import com.amazonaws.services.comprehend.model.BatchDetectSentimentResult;
 import com.amazonaws.services.comprehend.model.SentimentScore;
+import com.amazonaws.services.lexmodelbuilding.AmazonLexModelBuilding;
+import com.amazonaws.services.lexmodelbuilding.AmazonLexModelBuildingClientBuilder;
+import com.amazonaws.services.lexmodelbuilding.model.GetIntentRequest;
+import com.amazonaws.services.lexmodelbuilding.model.GetIntentResult;
 import com.amazonaws.util.ComprehendUtil;
 import com.amazonaws.util.TranslateUtil;
 
@@ -57,6 +62,13 @@ public class SentimentLogic {
 			 englishText = TranslateUtil.translateText(text, language);
         }
 		return englishText;
+	}
+	
+	public static void getIntent(String text) {
+		AmazonLexModelBuilding client = AmazonLexModelBuildingClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+		GetIntentRequest request = new GetIntentRequest().withName("DocOrderPizza").withVersion("$LATEST");
+		GetIntentResult response = client.getIntent(request);
+		System.out.println("lex response: " + response);
 	}
 	
 }

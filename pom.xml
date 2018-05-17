@@ -20,6 +20,11 @@
 	    <artifactId>aws-java-sdk-translate</artifactId>
 	    <version>1.11.328</version>
 	  </dependency>
+	<dependency>
+	    <groupId>com.amazonaws</groupId>
+	    <artifactId>aws-java-sdk-lex</artifactId>
+	    <version>1.11.96</version>
+	</dependency>
 		<dependency>
 		    <groupId>com.googlecode</groupId>
 		    <artifactId>google-api-translate-java</artifactId>

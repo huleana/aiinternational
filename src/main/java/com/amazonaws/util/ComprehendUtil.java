@@ -10,6 +10,10 @@ import com.amazonaws.services.comprehend.model.BatchDetectSentimentRequest;
 import com.amazonaws.services.comprehend.model.BatchDetectSentimentResult;
 import com.amazonaws.services.comprehend.model.DetectDominantLanguageRequest;
 import com.amazonaws.services.comprehend.model.DetectDominantLanguageResult;
+import com.amazonaws.services.comprehend.model.DetectEntitiesRequest;
+import com.amazonaws.services.comprehend.model.DetectEntitiesResult;
+import com.amazonaws.services.comprehend.model.DetectKeyPhrasesRequest;
+import com.amazonaws.services.comprehend.model.DetectKeyPhrasesResult;
 import com.amazonaws.services.comprehend.model.DetectSentimentRequest;
 import com.amazonaws.services.comprehend.model.DetectSentimentResult;
 import com.amazonaws.services.comprehend.model.DominantLanguage;
@@ -53,6 +57,28 @@ public class ComprehendUtil {
         detectSentimentResult = comprehendClient.batchDetectSentiment(detectSentimentRequest);
         System.out.println("Result: " + detectSentimentResult);
         return detectSentimentResult;
+	}
+	
+	public static DetectKeyPhrasesResult detectKeyPhrase(String text) {
+		DetectKeyPhrasesResult detectKeyPhrasesResult = null;
+		// Call detectSentiment API
+		DetectKeyPhrasesRequest detectKeyPhrasesRequest = new DetectKeyPhrasesRequest().withText(text)
+                                                                                    .withLanguageCode("en");
+        
+		detectKeyPhrasesResult = comprehendClient.detectKeyPhrases(detectKeyPhrasesRequest);
+        System.out.println("Result: " + detectKeyPhrasesResult);
+        return detectKeyPhrasesResult;
+	}
+	
+	public static DetectEntitiesResult detectEntity(String text) {
+		DetectEntitiesResult detectEntitiesResult = null;
+		// Call detectSentiment API
+		DetectEntitiesRequest detectEntitiesRequest = new DetectEntitiesRequest().withText(text)
+                                                                                    .withLanguageCode("en");
+        
+		detectEntitiesResult = comprehendClient.detectEntities(detectEntitiesRequest);
+        System.out.println("Result: " + detectEntitiesResult);
+        return detectEntitiesResult;
 	}
 	
 	// Checks dominant language of a text
