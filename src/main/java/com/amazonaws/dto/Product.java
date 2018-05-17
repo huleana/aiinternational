@@ -1,5 +1,6 @@
 package com.amazonaws.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -10,11 +11,12 @@ public class Product {
 	private List<ProductReview> reviews;
 	
 	public Product() {
-		
+		this.reviews = new ArrayList<ProductReview>();
 	}
 	
 	public Product(String productName) {
 		this.productName = productName;
+		this.reviews = new ArrayList<ProductReview>();
 	}
 	
 	public String getProductName() {

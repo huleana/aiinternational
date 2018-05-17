@@ -44,8 +44,6 @@ public class ComprehendUtil {
 	        detectSentimentResult = comprehendClient.detectSentiment(detectSentimentRequest);
 	        productReview.setSentiment(detectSentimentResult.getSentiment());
 	        productReview.setSentimentResult(detectSentimentResult);
-	        System.out.println("Text: " + englishText);
-	        System.out.println("Language: " + language + ", Result: " + productReview.getSentiment());
 		} else {
 			System.out.println("This language is not supported.");
 		}
@@ -60,7 +58,6 @@ public class ComprehendUtil {
                                                                                     .withLanguageCode("en");
         
         detectSentimentResult = comprehendClient.batchDetectSentiment(detectSentimentRequest);
-        System.out.println("Result: " + detectSentimentResult);
         return detectSentimentResult;
 	}
 	
@@ -77,7 +74,6 @@ public class ComprehendUtil {
 				productReview.getKeyPhrases().add(keyPhraseList.get(i).getText());
 			}
 		}
-        System.out.println("Result: " + productReview.getKeyPhrases().toString());
         return detectKeyPhrasesResult;
 	}
 	
@@ -94,7 +90,6 @@ public class ComprehendUtil {
 				productReview.getEntityMap().put(entityList.get(i).getType(), entityList.get(i).getText());
 			}
 		}
-        System.out.println("Result: " + productReview.getEntityMap().toString());
         return detectEntitiesResult;
 	}
 	

@@ -9,14 +9,15 @@ import com.amazonaws.services.comprehend.model.DetectSentimentResult;
 
 public class ProductReview {
 	private String id;
-	private String name;
+	private String customerReview;
 	private DetectSentimentResult sentimentResult;
 	private String sentiment;
+	private int score;
 	private List<String> keyPhrases;
 	private Map<String, String> entityMap;
 	
-	public ProductReview(String name) {
-		this.name = name;
+	public ProductReview(String customerReview) {
+		this.customerReview = customerReview;
 		this.keyPhrases = new ArrayList<String>();
 		this.entityMap = new HashMap<String, String>();
 	}
@@ -32,11 +33,11 @@ public class ProductReview {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getCustomerReview() {
+		return customerReview;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerReview(String customerReview) {
+		this.customerReview = customerReview;
 	}
 	public DetectSentimentResult getSentimentResult() {
 		return sentimentResult;
@@ -50,6 +51,14 @@ public class ProductReview {
 
 	public void setSentiment(String sentiment) {
 		this.sentiment = sentiment;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	public List<String> getKeyPhrases() {

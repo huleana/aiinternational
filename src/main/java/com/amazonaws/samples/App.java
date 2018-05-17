@@ -9,6 +9,4 @@ public class App
     	ProductReviewsAnalysisLogic.analyzeReviews();
         System.out.println( "Done" );
     }
-    
-    
 }
