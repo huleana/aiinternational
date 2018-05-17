@@ -3,27 +3,31 @@ package com.amazonaws.samples;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amazonaws.dto.Product;
-import com.amazonaws.logic.ProductReviewsAnalysisLogic;
+import com.amazonaws.logic.APIProductReviewsAnalysisLogic;
 
 @RestController
 public class AppController {
 	
-	 @RequestMapping("/review/{reviewText}")
-	    public String reviewSubmit(@PathVariable String reviewText) {
-		 	ProductReviewsAnalysisLogic.analyzeReviews();
+	 @RequestMapping("/review")
+	    public String reviewSubmit(
+	    		@RequestParam("name") String productName,
+	    		@RequestParam("description") String description,
+	    		@RequestParam("price") int price,
+	    		@RequestParam("review") String reviewText) {
+		 	APIProductReviewsAnalysisLogic.analyzeReviews(productName, price, description, reviewText);
 	        System.out.println( "Done" );
 	        return "Review submitted: " + reviewText;
 	    }
 	 
-	 @RequestMapping("/search/{searchText}")
-	    public List<Product> index(@PathVariable String searchText) {
+	 @RequestMapping("/search")
+	    public List<Product> index(@RequestParam("searchText") String searchText) {
 		 	List<Product> recommendations = Collections.emptyList();
-		 	///Recommendation method
+//		 	APIProductSearchReviewLogic.searchReviews(searchText);
 	        return recommendations;
 	    }
 }
