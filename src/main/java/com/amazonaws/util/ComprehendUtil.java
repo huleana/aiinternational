@@ -3,6 +3,7 @@ package com.amazonaws.util;
 import java.util.Iterator;
 import java.util.List;
 
+import com.amazonaws.dto.ProductReview;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.comprehend.AmazonComprehend;
 import com.amazonaws.services.comprehend.AmazonComprehendClientBuilder;
@@ -17,6 +18,8 @@ import com.amazonaws.services.comprehend.model.DetectKeyPhrasesResult;
 import com.amazonaws.services.comprehend.model.DetectSentimentRequest;
 import com.amazonaws.services.comprehend.model.DetectSentimentResult;
 import com.amazonaws.services.comprehend.model.DominantLanguage;
+import com.amazonaws.services.comprehend.model.Entity;
+import com.amazonaws.services.comprehend.model.KeyPhrase;
 
 public class ComprehendUtil {
 	
@@ -24,7 +27,7 @@ public class ComprehendUtil {
             AmazonComprehendClientBuilder.standard().withRegion(Regions.US_EAST_1)
                                          .build();
 	
-	public static DetectSentimentResult detectDominantSentiment(String text) {
+	public static DetectSentimentResult detectDominantSentiment(ProductReview productReview, String text) {
 		DetectSentimentResult detectSentimentResult = null;
 		// Get dominant language
 		String language = ComprehendUtil.detectDominantLanguage(text);
@@ -39,8 +42,10 @@ public class ComprehendUtil {
 	        DetectSentimentRequest detectSentimentRequest = new DetectSentimentRequest().withText(englishText)
 	                                                                                    .withLanguageCode("en");
 	        detectSentimentResult = comprehendClient.detectSentiment(detectSentimentRequest);
+	        productReview.setSentiment(detectSentimentResult.getSentiment());
+	        productReview.setSentimentResult(detectSentimentResult);
 	        System.out.println("Text: " + englishText);
-	        System.out.println("Language: " + language + ", Result: " + detectSentimentResult.getSentiment());
+	        System.out.println("Language: " + language + ", Result: " + productReview.getSentiment());
 		} else {
 			System.out.println("This language is not supported.");
 		}
@@ -48,7 +53,7 @@ public class ComprehendUtil {
         return detectSentimentResult;
 	}
 	
-	public static BatchDetectSentimentResult detectBatchDominantSentiment(List<String> text) {
+	public static BatchDetectSentimentResult detectBatchDominantSentiment(ProductReview productReview, List<String> text) {
 		BatchDetectSentimentResult detectSentimentResult = null;
 		// Call detectSentiment API
         BatchDetectSentimentRequest detectSentimentRequest = new BatchDetectSentimentRequest().withTextList(text)
@@ -59,25 +64,37 @@ public class ComprehendUtil {
         return detectSentimentResult;
 	}
 	
-	public static DetectKeyPhrasesResult detectKeyPhrase(String text) {
+	public static DetectKeyPhrasesResult detectKeyPhrase(ProductReview productReview, String text) {
 		DetectKeyPhrasesResult detectKeyPhrasesResult = null;
 		// Call detectSentiment API
 		DetectKeyPhrasesRequest detectKeyPhrasesRequest = new DetectKeyPhrasesRequest().withText(text)
                                                                                     .withLanguageCode("en");
         
 		detectKeyPhrasesResult = comprehendClient.detectKeyPhrases(detectKeyPhrasesRequest);
-        System.out.println("Result: " + detectKeyPhrasesResult);
+		if(detectKeyPhrasesResult != null) {
+			List<KeyPhrase> keyPhraseList = detectKeyPhrasesResult.getKeyPhrases();
+			for(int i = 0; i < keyPhraseList.size(); i++) {
+				productReview.getKeyPhrases().add(keyPhraseList.get(i).getText());
+			}
+		}
+        System.out.println("Result: " + productReview.getKeyPhrases().toString());
         return detectKeyPhrasesResult;
 	}
 	
-	public static DetectEntitiesResult detectEntity(String text) {
+	public static DetectEntitiesResult detectEntity(ProductReview productReview, String text) {
 		DetectEntitiesResult detectEntitiesResult = null;
 		// Call detectSentiment API
 		DetectEntitiesRequest detectEntitiesRequest = new DetectEntitiesRequest().withText(text)
                                                                                     .withLanguageCode("en");
         
 		detectEntitiesResult = comprehendClient.detectEntities(detectEntitiesRequest);
-        System.out.println("Result: " + detectEntitiesResult);
+		if(detectEntitiesResult != null) {
+			List<Entity> entityList = detectEntitiesResult.getEntities();
+			for(int i=0; i < entityList.size(); i++) {
+				productReview.getEntityMap().put(entityList.get(i).getType(), entityList.get(i).getText());
+			}
+		}
+        System.out.println("Result: " + productReview.getEntityMap().toString());
         return detectEntitiesResult;
 	}
 	

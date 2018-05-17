@@ -1,41 +1,51 @@
 package com.amazonaws.dto;
 
-import com.amazonaws.services.comprehend.model.BatchDetectSentimentResult;
-import com.amazonaws.services.comprehend.model.SentimentScore;
+import java.util.List;
 
 public class Product {
-	private String id;
-	private String name;
-	private BatchDetectSentimentResult reviewsList;
-	private SentimentScore aveSentimentScore;
+	private String productName;
+	private String price;
+	private String description;
+	private float averageScore;
+	private List<ProductReview> reviews;
 	
-	public Product(String name) {
-		this.name = name;
+	public Product() {
+		
 	}
 	
-	public String getId() {
-		return id;
+	public Product(String productName) {
+		this.productName = productName;
 	}
-	public void setId(String id) {
-		this.id = id;
+	
+	public String getProductName() {
+		return productName;
 	}
-	public String getName() {
-		return name;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public String getPrice() {
+		return price;
 	}
-	public BatchDetectSentimentResult getReviewsList() {
-		return reviewsList;
+	public void setPrice(String price) {
+		this.price = price;
 	}
-	public void setReviewsList(BatchDetectSentimentResult reviewsList) {
-		this.reviewsList = reviewsList;
+	public String getDescription() {
+		return description;
 	}
-	public SentimentScore getAveSentimentScore() {
-		return aveSentimentScore;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-
-	public void setAveSentimentScore(SentimentScore aveSentimentScore) {
-		this.aveSentimentScore = aveSentimentScore;
+	public List<ProductReview> getReviews() {
+		return reviews;
 	}
+	public void setReviews(List<ProductReview> reviews) {
+		this.reviews = reviews;
+	}
+	public float getAverageScore() {
+		return averageScore;
+	}
+	public void setAverageScore(float averageScore) {
+		this.averageScore = averageScore;
+	}
+	
 }
