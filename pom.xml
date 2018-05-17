@@ -4,7 +4,17 @@
   <artifactId>comprehend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>comprehend-consumer</name>
+  <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.2.RELEASE</version>
+    </parent>
+    
   <dependencies>
+   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 	  <dependency>
 	    <groupId>com.amazonaws</groupId>
 	    <artifactId>aws-java-sdk</artifactId>
@@ -48,11 +58,14 @@
 	</dependencies>
   <build>
     <plugins>
+    <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.7.0</version>
         <configuration>
-          <release>10</release>
           <archive>
               <manifest>
                   <mainClass>com.amazonaws.samples.App</mainClass>
