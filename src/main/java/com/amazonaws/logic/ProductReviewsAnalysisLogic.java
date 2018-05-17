@@ -11,7 +11,7 @@ import com.amazonaws.util.FileLogic;
 public class ProductReviewsAnalysisLogic {
 	
 	public static void analyzeReviews() {
-		final String filename = "Sodossny-JP";
+		final String filename = "GRECERELLE Women's Sleeveless Long Maxi Dress";
 		List<String> reviews = FileLogic.readFromFile(filename);
 		Product product = new Product(filename);
 		
@@ -41,6 +41,7 @@ public class ProductReviewsAnalysisLogic {
 	    	System.out.println("Review: " + productReviews.get(i).getCustomerReview());
 	        System.out.println("Rating: " + productReviews.get(i).getScore());
 	        System.out.println("Sentiment: " + productReviews.get(i).getSentiment());
+	        System.out.println("Sentiment Score: " + productReviews.get(i).getSentimentScore());
 	        System.out.println("Key Phrases: " + productReviews.get(i).getKeyPhrases().toString());
 	        System.out.println("Entities: " + productReviews.get(i).getEntityMap().toString());
 	    	System.out.println("---------------------------");

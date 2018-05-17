@@ -20,6 +20,7 @@ import com.amazonaws.services.comprehend.model.DetectSentimentResult;
 import com.amazonaws.services.comprehend.model.DominantLanguage;
 import com.amazonaws.services.comprehend.model.Entity;
 import com.amazonaws.services.comprehend.model.KeyPhrase;
+import com.amazonaws.services.comprehend.model.SentimentScore;
 
 public class ComprehendUtil {
 	
@@ -44,6 +45,22 @@ public class ComprehendUtil {
 	        detectSentimentResult = comprehendClient.detectSentiment(detectSentimentRequest);
 	        productReview.setSentiment(detectSentimentResult.getSentiment());
 	        productReview.setSentimentResult(detectSentimentResult);
+	        
+	        SentimentScore sentimentScore = detectSentimentResult.getSentimentScore();
+	        switch(productReview.getSentiment()) {
+	        case "POSITIVE":
+				productReview.setSentimentScore((int)(sentimentScore.getPositive()*100));
+				break;
+			case "NEGATIVE":
+				productReview.setSentimentScore((int)(sentimentScore.getNegative()*100));
+				break;
+			case "MIXED":
+				productReview.setSentimentScore((int)(sentimentScore.getMixed()*100));
+				break;
+			case "NEUTRAL":
+				productReview.setSentimentScore((int)(sentimentScore.getNeutral()*100));
+				break;
+	        }
 		} else {
 			System.out.println("This language is not supported.");
 		}
@@ -71,7 +88,7 @@ public class ComprehendUtil {
 		if(detectKeyPhrasesResult != null) {
 			List<KeyPhrase> keyPhraseList = detectKeyPhrasesResult.getKeyPhrases();
 			for(int i = 0; i < keyPhraseList.size(); i++) {
-				productReview.getKeyPhrases().add(keyPhraseList.get(i).getText());
+				productReview.getKeyPhrases().put(keyPhraseList.get(i).getText(), Integer.valueOf((int)(keyPhraseList.get(i).getScore()*100)));
 			}
 		}
         return detectKeyPhrasesResult;
