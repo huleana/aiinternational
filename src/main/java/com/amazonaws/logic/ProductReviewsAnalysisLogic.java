@@ -1,5 +1,6 @@
 package com.amazonaws.logic;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.amazonaws.dto.Product;
@@ -29,7 +30,8 @@ public class ProductReviewsAnalysisLogic {
 	    for(int i=0; i<productReviews.size(); i++) {
 	    	totalScore += productReviews.get(i).getScore();
 	    }
-	    product.setAverageScore(totalScore/productReviews.size());
+	    DecimalFormat df = new DecimalFormat("0.00");
+	    product.setAverageScore(df.format((double)totalScore/productReviews.size()));
 	    
 	    System.out.println("------- PRODUCT -------");
 	    System.out.println("Product Name: " + product.getProductName());

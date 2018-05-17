@@ -7,7 +7,7 @@ public class Product {
 	private String productName;
 	private String price;
 	private String description;
-	private float averageScore;
+	private String averageScore;
 	private List<ProductReview> reviews;
 	
 	public Product() {
@@ -43,10 +43,10 @@ public class Product {
 	public void setReviews(List<ProductReview> reviews) {
 		this.reviews = reviews;
 	}
-	public float getAverageScore() {
+	public String getAverageScore() {
 		return averageScore;
 	}
-	public void setAverageScore(float averageScore) {
+	public void setAverageScore(String averageScore) {
 		this.averageScore = averageScore;
 	}
 	
