@@ -1,12 +1,14 @@
 package com.amazonaws.dto;
 
+import java.util.List;
+
 public class ProductRecommendation {
     private String productId;
     private String productName;
     private double price;
     private String description;
     private int rating;
-    private String review;
+    private List<String> review;
 
     public String getProductId() {
         return productId;
@@ -48,11 +50,11 @@ public class ProductRecommendation {
         this.rating = rating;
     }
 
-    public String getReview() {
+    public List<String> getReview() {
         return review;
     }
 
-    public void setReview(String review) {
+    public void setReview(List<String> review) {
         this.review = review;
     }
 }

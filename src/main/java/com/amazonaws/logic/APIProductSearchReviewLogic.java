@@ -80,7 +80,8 @@ public class APIProductSearchReviewLogic {
 			//product_name, price, description, review, avg(key_phrase_score) 
 			String getQueryStatement = "select product_name, price, rating, description, review, avg(key_phrase_score) avg_key_score "
 					+ " from reviews where lower(key_phrase) in ("+keyPhrases+") "
-							+ "or lower(entity) in ("+entities+") and sentiment = 'POSITIVE' group by product_name, price, description, review;";
+							+ "or lower(entity) in ("+entities+") and sentiment = 'POSITIVE' "
+									+ "group by product_name, price, description, review order by 1;";
  
 			prepStatement = conn.prepareStatement(getQueryStatement);
  
