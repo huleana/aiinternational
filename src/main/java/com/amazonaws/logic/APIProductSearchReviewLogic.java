@@ -91,10 +91,12 @@ public class APIProductSearchReviewLogic {
 			// Let's iterate through the java ResultSet
 			List<ProductRecommendation> recommendations = new ArrayList<ProductRecommendation>();
 			String previousProductName = "";
+			int id = 1;
 			while (rs.next()) {
 				ProductRecommendation pr;
 				if(!previousProductName.equals(rs.getString("product_name"))) {
 					pr = new ProductRecommendation();
+					pr.setProductId(id+"");
 					pr.setProductName(rs.getString("product_name"));
 					pr.setDescription(rs.getString("description"));
 					pr.setPrice(rs.getInt("price"));
@@ -102,6 +104,7 @@ public class APIProductSearchReviewLogic {
 					pr.setReview(new ArrayList<String>());
 					pr.getReview().add(rs.getString("review"));
 					previousProductName = rs.getString("product_name");
+					id++;
 					recommendations.add(pr);
 				} else {
 					pr = recommendations.get(recommendations.size()-1);
