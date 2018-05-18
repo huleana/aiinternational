@@ -98,8 +98,10 @@ public class APIProductSearchReviewLogic {
 					pr.setProductName(rs.getString("product_name"));
 					pr.setDescription(rs.getString("description"));
 					pr.setPrice(rs.getInt("price"));
-//					pr.setRating(rs.getInt("rating"));
+					pr.setRating(rs.getInt("rating"));
+					pr.setReview(new ArrayList<String>());
 					pr.getReview().add(rs.getString("review"));
+					previousProductName = rs.getString("product_name");
 					recommendations.add(pr);
 				} else {
 					pr = recommendations.get(recommendations.size()-1);
