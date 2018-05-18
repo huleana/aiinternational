@@ -89,24 +89,29 @@ public class APIProductSearchReviewLogic {
 			ResultSet rs = prepStatement.executeQuery();
  
 			// Let's iterate through the java ResultSet
-			
 			List<ProductRecommendation> recommendations = new ArrayList<ProductRecommendation>();
+			String previousProductName = "";
 			while (rs.next()) {
-				ProductRecommendation pr = new ProductRecommendation(); 
-				pr.setProductName(rs.getString("product_name"));
-				pr.setDescription(rs.getString("description"));
-				pr.setPrice(rs.getInt("price"));
-//				pr.setRating(rs.getInt("rating"));
-				pr.setReview(rs.getString("review"));
-				recommendations.add(pr);
+				ProductRecommendation pr;
+				if(!previousProductName.equals(rs.getString("product_name"))) {
+					pr = new ProductRecommendation();
+					pr.setProductName(rs.getString("product_name"));
+					pr.setDescription(rs.getString("description"));
+					pr.setPrice(rs.getInt("price"));
+//					pr.setRating(rs.getInt("rating"));
+					pr.getReview().add(rs.getString("review"));
+					recommendations.add(pr);
+				} else {
+					pr = recommendations.get(recommendations.size()-1);
+					pr.getReview().add(rs.getString("review"));
+				}
 				System.out.println("Name: " + rs.getString("product_name"));
 				System.out.println("Description: " + rs.getString("description"));
 				System.out.println("Price: " + rs.getInt("price"));
 				System.out.println("Rating: " + rs.getInt("rating"));
 				System.out.println("Review: " + rs.getString("review"));
-				// Simply Print the results
 			}
- 
+
 			return recommendations;
 		} catch (
  
