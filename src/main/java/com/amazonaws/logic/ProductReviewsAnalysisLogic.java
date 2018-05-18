@@ -11,7 +11,7 @@ import com.amazonaws.util.FileLogic;
 public class ProductReviewsAnalysisLogic {
 	
 	public static void analyzeReviews() {
-		final String filename = "GRECERELLE Women's Sleeveless Long Maxi Dress";
+		final String filename = "How to Win Friends & Influence People";
 		List<String> reviews = FileLogic.readFromFile(filename);
 		Product product = new Product(filename);
 		
