@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DatamuseQueryLogic {
 
+	//TODO Integrate Datamuse to improve the search from KeyPhrases and Entitites
     public static List<String> findSimilar(String text) {
     	List<String> resultList = new ArrayList<String>();
         String value = text.replaceAll(" ", "+");

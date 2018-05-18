@@ -39,5 +39,21 @@ public class AnalyzeController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/analyze_all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
+    public ResponseEntity<AnalyzeResponse> analyzeAll(@Valid @RequestBody AnalyzeRequest request) throws Exception {
+        Logger.getLogger("API").info("request: " + request.getCondition());
+        AnalyzeResponse response = new AnalyzeResponse();
+
+        List<ProductRecommendation> productList = APIProductSearchReviewLogic.searchReviewsAll(request.getCondition());
+        if (productList == null || productList.isEmpty()) {
+            response.setStatus(HttpStatus.NOT_FOUND);
+            response.setProductList(new ArrayList<>());
+        } else {
+            response.setProductList(productList);
+            response.setStatus(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 }

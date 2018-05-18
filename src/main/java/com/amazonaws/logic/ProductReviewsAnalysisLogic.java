@@ -10,6 +10,7 @@ import com.amazonaws.util.FileLogic;
 
 public class ProductReviewsAnalysisLogic {
 	
+	//TODO Remove this class for Tests.
 	public static void analyzeReviews() {
 		final String filename = "How to Win Friends & Influence People";
 		List<String> reviews = FileLogic.readFromFile(filename);

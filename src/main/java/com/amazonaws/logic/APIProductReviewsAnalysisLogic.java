@@ -24,16 +24,6 @@ public class APIProductReviewsAnalysisLogic {
 		ComprehendUtil.detectKeyPhrase(productReview, review);
 		ComprehendUtil.detectEntity(productReview, review);
 	    SentimentLogic.analyzeSentimentResult(productReview);
-//	    System.out.println("------- PRODUCT -------");
-//	    System.out.println("Product Name: " + productName);
-//	    System.out.println("Product Description: " + description);
-//	    System.out.println("Product Price: " + price);
-//	    System.out.println("---------------------------");
-//    	System.out.println("Review: " + productReview.getCustomerReview());
-//        System.out.println("Rating: " + productReview.getScore());
-//        System.out.println("Sentiment: " + productReview.getSentiment());
-        
-
 	    for(Map.Entry<String, Integer> entry: productReview.getKeyPhrases().entrySet()) {
     		addDataToDB(
     				productName, price, description, 0,  
@@ -42,15 +32,15 @@ public class APIProductReviewsAnalysisLogic {
     				entry.getValue(),
     				productReview.getEntityMap().toString(), review);		
     	}
-//    	for(int i=0; i < productReview.getEntityMap().size(); i++) {
-//    		addDataToDB(
-//    				productName, price, description, 0,  
-//    				productReview.getSentiment(), productReview.getSentimentScore(),  
-//    				"",
-//    				0,
-//    				productReview.getEntityMap().get(i).toString(), review);		
-//    	}
-    	
+	    //TODO Fix the for loop below to iterate correctly the entities
+	    //    	for(int i=0; i < productReview.getEntityMap().size(); i++) {
+	    //    		addDataToDB(
+	    //    				productName, price, description, 0,  
+	    //    				productReview.getSentiment(), productReview.getSentimentScore(),  
+	    //    				"",
+	    //    				0,
+	    //    				productReview.getEntityMap().get(i).toString(), review);		
+	    //    	}
     }
 	
 	public static void addDataToDB(
@@ -65,6 +55,7 @@ public class APIProductReviewsAnalysisLogic {
 			String entity,
 			String review) {
 		 
+		//TODO Remove the native query and Prepared Statement. Use JPA instead.
 		try {
 			String insertQueryStatement = "INSERT  INTO  "
 					+ "reviews  "
@@ -84,9 +75,6 @@ public class APIProductReviewsAnalysisLogic {
 			prepStatement.setDouble(8, keyPhraseScore);
 			prepStatement.setString(9, entity);
 			prepStatement.setString(10, review);
-			
- 
-			// execute insert SQL statement
 			prepStatement.executeUpdate();
 		} catch (
  
@@ -96,6 +84,7 @@ public class APIProductReviewsAnalysisLogic {
 	}
 	
 	private static void connectDB() {
+		//TODO same as TODO above. Use JPA.
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.print("Congrats - Seems your MySQL JDBC Driver Registered!");
