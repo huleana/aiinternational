@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amazonaws.dto.Product;
+import com.amazonaws.dto.ProductRecommendation;
 import com.amazonaws.logic.APIProductReviewsAnalysisLogic;
+import com.amazonaws.logic.APIProductSearchReviewLogic;
 
 @RestController
 public class AppController {
@@ -25,9 +27,9 @@ public class AppController {
 	    }
 	 
 	 @RequestMapping("/search")
-	    public List<Product> index(@RequestParam("searchText") String searchText) {
-		 	List<Product> recommendations = Collections.emptyList();
-//		 	APIProductSearchReviewLogic.searchReviews(searchText);
+	    public List<ProductRecommendation> index(@RequestParam("searchText") String searchText) {
+		 	List<ProductRecommendation> recommendations = Collections.emptyList();
+		 	APIProductSearchReviewLogic.searchReviews(searchText);
 	        return recommendations;
 	    }
 }

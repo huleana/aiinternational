@@ -42,14 +42,14 @@ public class APIProductReviewsAnalysisLogic {
     				entry.getValue(),
     				productReview.getEntityMap().toString(), review);		
     	}
-    	for(int i=0; i < productReview.getEntityMap().size(); i++) {
-    		addDataToDB(
-    				productName, price, description, 0,  
-    				productReview.getSentiment(), productReview.getSentimentScore(),  
-    				"",
-    				0,
-    				productReview.getEntityMap().get(i).toString(), review);		
-    	}
+//    	for(int i=0; i < productReview.getEntityMap().size(); i++) {
+//    		addDataToDB(
+//    				productName, price, description, 0,  
+//    				productReview.getSentiment(), productReview.getSentimentScore(),  
+//    				"",
+//    				0,
+//    				productReview.getEntityMap().get(i).toString(), review);		
+//    	}
     	
     }
 	
