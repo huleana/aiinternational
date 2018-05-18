@@ -7,7 +7,6 @@ spring:
       charset: UTF-8
       enabled: true
   mvc:
-    static-path-pattern: /resources/**
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp

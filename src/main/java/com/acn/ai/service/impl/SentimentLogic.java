@@ -9,10 +9,8 @@ import com.amazonaws.services.lexmodelbuilding.AmazonLexModelBuilding;
 import com.amazonaws.services.lexmodelbuilding.AmazonLexModelBuildingClientBuilder;
 import com.amazonaws.services.lexmodelbuilding.model.GetIntentRequest;
 import com.amazonaws.services.lexmodelbuilding.model.GetIntentResult;
-import org.springframework.stereotype.Service;
 
-@Service
-public class SentimentServiceImpl {
+public class SentimentLogic {
 	
 	public static void analyzeSentimentResult(ProductReview productReview) {
 			int score = 0;

@@ -1,12 +1,13 @@
 package com.acn.ai.controller.response;
 
+import com.acn.ai.service.dto.ProductRecommendation;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
 public class AnalyzeResponse {
     private HttpStatus status;
-    private List<Product> productList;
+    private List<ProductRecommendation> productList;
 
     public HttpStatus getStatus() {
         return status;
@@ -16,11 +17,11 @@ public class AnalyzeResponse {
         this.status = status;
     }
 
-    public List<Product> getProductList() {
+    public List<ProductRecommendation> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
+    public void setProductList(List<ProductRecommendation> productList) {
         this.productList = productList;
     }
 }

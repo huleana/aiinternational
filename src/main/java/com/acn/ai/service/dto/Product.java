@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
-	private String productId;
 	private String productName;
 	private String price;
 	private String description;
@@ -19,15 +18,7 @@ public class Product {
 		this.productName = productName;
 		this.reviews = new ArrayList<ProductReview>();
 	}
-
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
-
+	
 	public String getProductName() {
 		return productName;
 	}

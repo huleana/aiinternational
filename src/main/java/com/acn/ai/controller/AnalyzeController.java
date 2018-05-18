@@ -2,12 +2,12 @@ package com.acn.ai.controller;
 
 import com.acn.ai.controller.request.AnalyzeRequest;
 import com.acn.ai.controller.response.AnalyzeResponse;
-import com.acn.ai.controller.response.Product;
+import com.acn.ai.service.dto.ProductRecommendation;
+import com.acn.ai.service.impl.APIProductSearchReviewLogic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -23,8 +23,7 @@ public class AnalyzeController {
         Logger.getLogger("API").info("request: " + request.getCondition());
         AnalyzeResponse response = new AnalyzeResponse();
 
-        // TODO: call real service layer logic
-        List<Product> productList = this.mockProductList();
+        List<ProductRecommendation> productList = APIProductSearchReviewLogic.searchReviews(request.getCondition());
         if (productList == null || productList.isEmpty()) {
             response.setStatus(HttpStatus.NOT_FOUND);
             response.setProductList(new ArrayList<>());
@@ -33,19 +32,6 @@ public class AnalyzeController {
             response.setStatus(HttpStatus.OK);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    private List<Product> mockProductList() {
-        List<Product> productList = new ArrayList<>();
-        Product product = new Product();
-        product.setProductId("1001");
-        product.setProductName("bike");
-        product.setPrice(1000);
-        product.setRating(5);
-        product.setDescription("test description");
-        product.setReview("asdfdasfasf");
-        productList.add(product);
-        return productList;
     }
 
 }

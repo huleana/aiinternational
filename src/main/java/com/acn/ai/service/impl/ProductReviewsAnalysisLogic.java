@@ -7,13 +7,11 @@ import com.acn.ai.service.dto.Product;
 import com.acn.ai.service.dto.ProductReview;
 import com.acn.ai.utils.ComprehendUtil;
 import com.acn.ai.utils.FileLogic;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ProductReviewsAnalysisImpl {
+public class ProductReviewsAnalysisLogic {
 	
 	public static void analyzeReviews() {
-		final String filename = "GRECERELLE Women's Sleeveless Long Maxi Dress";
+		final String filename = "How to Win Friends & Influence People";
 		List<String> reviews = FileLogic.readFromFile(filename);
 		Product product = new Product(filename);
 		
@@ -22,7 +20,7 @@ public class ProductReviewsAnalysisImpl {
 	    	ComprehendUtil.detectDominantSentiment(productReview, reviews.get(i));
 			ComprehendUtil.detectKeyPhrase(productReview, reviews.get(i));
 			ComprehendUtil.detectEntity(productReview, reviews.get(i));
-			SentimentServiceImpl.analyzeSentimentResult(productReview);
+		    SentimentLogic.analyzeSentimentResult(productReview);
 		    product.getReviews().add(productReview);
 	    }
 	    
